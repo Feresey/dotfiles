@@ -1,0 +1,24 @@
+{
+    "Lua.diagnostics.globals": [
+        "awesome",
+        "client",
+        "screen",
+        "root"
+    ],
+    "Lua.completion.autoRequire": true,
+    "Lua.completion.enable": true,
+    "Lua.diagnostics.groupFileStatus": {
+        "global": "None"
+    },
+    "Lua.workspace.library": [
+        "${cwd}",
+        "/usr/share/awesome/lib",
+    ],
+    "Lua.runtime.path": [
+        "${cwd}",
+        "/usr/share/awesome/lib",
+        "?.lua",
+        "?/init.lua"
+    ],
+    "Lua.runtime.version": "Lua 5.3",
+}
