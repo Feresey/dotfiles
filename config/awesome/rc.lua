@@ -209,14 +209,16 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+        {
+            -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
-        {             -- Right widgets
+        {
+            -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
@@ -229,11 +231,15 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({}, 3, function() mymainmenu:toggle() end),
+-- awful.button({}, 3, function() mymainmenu:toggle() end),
     awful.button({}, 4, awful.tag.viewnext),
     awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
+
+awful.spawn:easy_async_with_shell("~/bin/autostart.sh",
+    function(stdout, stderr, exitreason, exitcode)
+    end)
 
 local function focus(dir)
     return function()
@@ -241,13 +247,11 @@ local function focus(dir)
     end
 end
 
-
-local function move_focus(dir)
+local function move_focused(dir)
     return function()
         awful.client.swap.bydirection(dir, client.focus, false)
     end
 end
-
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
@@ -275,10 +279,10 @@ globalkeys = gears.table.join(
         end,
         { description = "go back", group = "client" }),
     -- move focused client
-    awful.key({ modkey, "Shift" }, "j", move_focus("down"), { description = "swap down", group = "client" }),
-    awful.key({ modkey, "Shift" }, "k", move_focus("up"), { description = "swap up", group = "client" }),
-    awful.key({ modkey, "Shift" }, "h", move_focus("left"), { description = "swap left", group = "client" }),
-    awful.key({ modkey, "Shift" }, "l", move_focus("right"), { description = "swap right", group = "client" }),
+    awful.key({ modkey, "Shift" }, "j", move_focused("down"), { description = "swap down", group = "client" }),
+    awful.key({ modkey, "Shift" }, "k", move_focused("up"), { description = "swap up", group = "client" }),
+    awful.key({ modkey, "Shift" }, "h", move_focused("left"), { description = "swap left", group = "client" }),
+    awful.key({ modkey, "Shift" }, "l", move_focused("right"), { description = "swap right", group = "client" }),
 
     -- awful.key({ modkey, }, "w", function() mymainmenu:show() end,
     --     { description = "show main menu", group = "awesome" }),
@@ -557,20 +561,24 @@ client.connect_signal("request::titlebars", function(c)
     )
 
     awful.titlebar(c):setup {
-        { -- Left
+        {
+            -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
             layout  = wibox.layout.fixed.horizontal
         },
-        {     -- Middle
-            { -- Title
+        {
+            -- Middle
+            {
+                -- Title
                 align  = "center",
                 widget = awful.titlebar.widget.titlewidget(c)
             },
             buttons = buttons,
             layout  = wibox.layout.flex.horizontal
         },
-        { -- Right
+        {
+            -- Right
             awful.titlebar.widget.floatingbutton(c),
             awful.titlebar.widget.maximizedbutton(c),
             awful.titlebar.widget.stickybutton(c),
