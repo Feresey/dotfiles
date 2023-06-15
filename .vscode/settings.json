@@ -7,8 +7,8 @@
     ],
     "Lua.completion.autoRequire": true,
     "Lua.completion.enable": true,
-    "Lua.diagnostics.groupFileStatus": {
-        "global": "None"
+    "Lua.diagnostics.neededFileStatus": {
+        "lowercase-global": "None",
     },
     "Lua.workspace.library": [
         "${cwd}",
