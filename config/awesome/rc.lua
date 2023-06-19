@@ -229,12 +229,14 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 -- }}}
 
+require("borders")
+
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
--- awful.button({}, 3, function() mymainmenu:toggle() end),
-    awful.button({}, 4, awful.tag.viewnext),
-    awful.button({}, 5, awful.tag.viewprev)
-))
+-- root.buttons(gears.table.join(
+-- -- awful.button({}, 3, function() mymainmenu:toggle() end),
+--     awful.button({}, 4, awful.tag.viewnext),
+--     awful.button({}, 5, awful.tag.viewprev)
+-- ))
 -- }}}
 
 -- local pid, err = awful.spawn.easy_async("autostart.sh",

@@ -3,7 +3,8 @@
         "awesome",
         "client",
         "screen",
-        "root"
+        "root",
+        "mouse"
     ],
     "Lua.completion.autoRequire": true,
     "Lua.completion.enable": true,
