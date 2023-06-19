@@ -3,7 +3,6 @@ local naughty = require("naughty")
 
 local smart_borders = require("third_party.smart_borders")
 
-
 smart_borders {
     show_button_tooltips = true,
 
@@ -55,7 +54,7 @@ smart_borders {
     },
 
     snapping = true,
-    snapping_center_mouse = true,
+    snapping_center_mouse = false,
 
     -- custom control example:
     button_back = function(c)
@@ -69,8 +68,9 @@ smart_borders {
     hot_corners_width = 5,
     hot_corners_height = 5,
     hot_corners = {
-        ["top_right"] = {
+        ["bottom_right"] = {
             left_click = function()
+                naughty.notify({ text = "left click" })
                 -- unfullscreen the focused client with left click
                 local c = client.focus
                 if c and c.fullscreen then

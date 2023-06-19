@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
+local naughty = require("naughty")
 
 local function focus(dir)
     return function()
@@ -91,7 +92,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" }),
 
-    awful.key({ modkey }, "x",
+    awful.key({ modkey }, "e",
         function()
             awful.prompt.run {
                 prompt       = "Run Lua code: ",
@@ -101,6 +102,18 @@ keys.globalkeys = gears.table.join(
             }
         end,
         { description = "lua execute prompt", group = "awesome" }),
+    awful.key({ modkey }, "x",
+        function()
+            local pid, err = awful.spawn.easy_async("xkill", function() end)
+            if not pid then
+                naughty.notify({
+                    preset = naughty.config.presets.critical,
+                    title = "Executing xkill",
+                    text = err,
+                })
+            end
+        end,
+        { description = "launch xkill", group = "awesome" }),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
         { description = "show the menubar", group = "launcher" })
@@ -113,12 +126,13 @@ keys.clientkeys = gears.table.join(
             c:raise()
         end,
         { description = "toggle fullscreen", group = "client" }),
-    awful.key({ modkey, "Shift" }, "c", function(c) c:kill() end,
+    awful.key({ modkey, "Shift" }, "q", function(c) c:kill() end,
         { description = "close", group = "client" }),
-    awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle,
+    awful.key({ modkey, "Shift" }, "f", awful.client.floating.toggle,
         { description = "toggle floating", group = "client" }),
     awful.key({ modkey, "Control" }, "Return", function(c) c:swap(awful.client.getmaster()) end,
         { description = "move to master", group = "client" }),
+    -- Что это?
     awful.key({ modkey, }, "o", function(c) c:move_to_screen() end,
         { description = "move to screen", group = "client" }),
     awful.key({ modkey, }, "t", function(c) c.ontop = not c.ontop end,
