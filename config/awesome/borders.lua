@@ -14,7 +14,7 @@ smart_borders {
     button_size = 40,
     button_floating_size = 60,
     button_close_size = 60,
-    border_width = 6,
+    border_width = 1,
 
     color_close_normal = {
         type = "linear",
@@ -65,21 +65,13 @@ smart_borders {
     -- hot_corners
     hot_corners_color = "#00000000",
     -- hot_corners_color = "#FD8489",
-    hot_corners_width = 5,
-    hot_corners_height = 5,
+    hot_corners_width = 1,
+    hot_corners_height = 1,
     hot_corners = {
-        ["bottom_right"] = {
-            left_click = function()
-                naughty.notify({ text = "left click" })
-                -- unfullscreen the focused client with left click
+        ["top_right"] = {
+            enter = function()
                 local c = client.focus
-                if c and c.fullscreen then
-                    c.fullscreen = false
-                end
-            end,
-            middle_click = function()
-                naughty.notify({ text = "middle" })
-                awesome.restart()
+                c.fullscreen = not c.fullscreen
             end,
         },
         ["top_left"] = {

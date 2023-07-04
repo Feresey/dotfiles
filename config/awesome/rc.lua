@@ -231,6 +231,7 @@ end)
 -- }}}
 
 require("borders")
+require("autoload")
 
 -- {{{ Mouse bindings
 -- root.buttons(gears.table.join(
@@ -240,35 +241,10 @@ require("borders")
 -- ))
 -- }}}
 
--- local pid, err = awful.spawn.easy_async("autostart.sh",
---     function(stdout, stderr, exitreason, exitcode)
---         naughty.notify({
---             preset = naughty.config.presets.info,
---             title = "Executing autostart.sh",
---         })
---         if exitcode ~= 0 then
---             naughty.notify({
---                 preset = naughty.config.presets.warn,
---                 title = "Error executing autostart.sh",
---                 text = "stdout: " .. stdout .. "\nstderr: " .. stderr
---             })
---             return
---         end
---     end
--- )
-
--- if not pid then
---     naughty.notify({
---         preset = naughty.config.presets.critical,
---         title = "Executing autostart.sh",
---         text = err,
---     })
--- end
 
 -- {{{ Key bindings
 
 keys = require("hotkeys")
-
 
 clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)
@@ -332,9 +308,10 @@ awful.rules.rules = {
                 "Event Tester", -- xev.
             },
             role = {
-                "AlarmWindow",   -- Thunderbird's calendar.
-                "ConfigManager", -- Thunderbird's about:config.
-                "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
+                "AlarmWindow",          -- Thunderbird's calendar.
+                "ConfigManager",        -- Thunderbird's about:config.
+                "GtkFileChooserDialog", -- Thunderbird's about:config.
+                "pop-up",               -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
         properties = { floating = true }
@@ -345,6 +322,21 @@ awful.rules.rules = {
         rule_any = { type = { "normal", "dialog" }
         },
         properties = { titlebars_enabled = true }
+    },
+
+    {
+        rule = { role = "GtkFileChooserDialog" },
+        properties = { placement = awful.placement.centered },
+    },
+
+    {
+        rule = {
+            class = "code",
+        },
+        except = {
+            role = "browser-window",
+        },
+        properties = { placement = awful.placement.centered },
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
